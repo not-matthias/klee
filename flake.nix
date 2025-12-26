@@ -11,8 +11,8 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
-        # Use LLVM 18 (adjust based on compatibility needs)
-        llvmPackages = pkgs.llvmPackages_18;
+        # Use LLVM 21 (latest)
+        llvmPackages = pkgs.llvmPackages_21;
 
         pythonEnv = pkgs.python3.withPackages (ps: with ps; [
           tabulate
