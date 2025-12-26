@@ -85,10 +85,10 @@ bool RaiseAsmPass::runOnModule(Module &M) {
   std::string Err;
 
   // Use target triple from the module if possible.
-  std::string TargetTriple = M.getTargetTriple();
-  if (TargetTriple.empty())
-    TargetTriple = llvm::sys::getDefaultTargetTriple();
-  const Target *Target = TargetRegistry::lookupTarget(TargetTriple, Err);
+  llvm::Triple TargetTriple = M.getTargetTriple();
+  if (TargetTriple.str().empty())
+    TargetTriple = llvm::Triple(llvm::sys::getDefaultTargetTriple());
+  const Target *Target = TargetRegistry::lookupTarget(TargetTriple.str(), Err);
 
   TargetMachine * TM = 0;
   if (Target == 0) {
@@ -105,7 +105,7 @@ bool RaiseAsmPass::runOnModule(Module &M) {
 
     TLI = TM->getSubtargetImpl(*(M.begin()))->getTargetLowering();
 
-    triple = llvm::Triple(TargetTriple);
+    triple = TargetTriple;
   }
 
   for (Module::iterator fi = M.begin(), fe = M.end(); fi != fe; ++fi) {
