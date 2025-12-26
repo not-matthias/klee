@@ -1344,7 +1344,7 @@ int main(int argc, char **argv, char **envp) {
 
   llvm::Module *mainModule = M.get();
 
-  const std::string &module_triple = mainModule->getTargetTriple();
+  const std::string module_triple = mainModule->getTargetTriple().str();
   std::string host_triple = llvm::sys::getDefaultTargetTriple();
 
   if (module_triple != host_triple)
