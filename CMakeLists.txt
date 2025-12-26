@@ -737,7 +737,8 @@ endif()
 ################################################################################
 # Miscellaneous install
 ################################################################################
-install(FILES include/klee/klee.h DESTINATION include/klee)
+# Install all KLEE headers (including development headers)
+install(DIRECTORY include/klee DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN "*.inc")
 
 ################################################################################
 # Uninstall rule
