@@ -1084,7 +1084,9 @@ public:
   }
 
   static ref<ConstantExpr> alloc(uint64_t v, Width w) {
-    return alloc(llvm::APInt(w, v));
+    // In LLVM 21+, APInt validates that unsigned values fit in the bit width.
+    // Use implicitTrunc=true to allow truncation of values like -1 to smaller widths.
+    return alloc(llvm::APInt(w, v, /*isSigned=*/false, /*implicitTrunc=*/true));
   }
 
   static ref<ConstantExpr> create(uint64_t v, Width w) {
